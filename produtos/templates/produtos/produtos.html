@@ -1,0 +1,85 @@
+{% extends 'bar.html' %}
+
+{% block titulo %}Produtos | {% endblock %}
+
+{% load static %}
+{% load ggfilters %}
+{% block conteudo %}
+<div class="btn-group" role="group">
+    <a href="{% url 'produto:produtos' %}" class="btn btn-secondary">Todos</a>
+    {% for categoria in categorias %}
+    {% if categoria.produto_set.count %}
+    <a href="{% url 'produto:produtos_por_categoria' categoria.id %}" class="btn btn-secondary">{{ categoria.nome }}</a>
+    {% endif %}
+    {% endfor %}
+</div>
+
+{% for categoria in categorias %}
+<div class="card" style="width: auto;">
+    {% if categoria.produto_set.count %}
+    {% if categoria_selecionada == categoria or categoria_selecionada is None %}
+
+    <div class="card-header" style="font-size: 1.5rem;">
+        {{ categoria.nome }}
+
+        <div class="menu">
+
+
+            <div class="menu-grid">
+                {% for produto in produtos %}
+                {% if produto.categoria == categoria %}
+                <div class="card">
+
+                    <div class="card-body" style="max-width: fit-content;">
+                        {% if produto.imagem %}
+                        <a href="#">
+                            <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}" style="height:80px;">
+                        </a>
+                        {% endif %}
+                        <h5 class="card-title">{{ produto.nome }}</h5>
+                        <p class="price">{{produto.preco | formata_preco}}</p>
+                        <div class="btn-group">
+                            <div class="col" style="display: flex;">
+                                <form action="{% url 'produto:removerdocarrinhoum' %}?pid={{produto.id}}"
+                                    id="form-remove-from-cart">
+                                    <input type="hidden" name="pid" value="{{ produto.id }}">
+                                    <button type="submit" class="btn btn-primary"
+                                        style="width: 40px; height: 40px; padding-bottom: 20px; padding-top: 8px;">
+                                        -</button>
+                                </form>
+                                <input type="number" id="{{ produto.id }}-quantidade"
+                                    value="{{ carrinho|quantidade:produto.id }}" min="0" max="100" step="1"
+                                    style="width:60px; height: 40px; text-align: center;"
+                                    class="form-control form-control-sm" readonly>
+                                <form action="{% url 'produto:adicionaraocarrinho' %}" id="form-add-to-cart">
+                                    <input type="hidden" name="pid" value="{{ produto.id }}">
+                                    <button type="submit" class="btn btn-primary"
+                                        style="width: 40px; height: 40px; padding-bottom: 20px; padding-top: 8px;">+</button>
+                                </form>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                    </form>
+
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+    {% endif %}
+
+    {% endif %}
+
+</div>
+{% endfor %}
+<div>
+    <a href="{% url 'produto:carrinho' %}" class="btn btn-primary btn-lg active btn-block btn btn-success" role="button"
+        aria-pressed="true" style="margin-top: 15px;">Comprar</a>
+</div>
+
+{% endblock %}
