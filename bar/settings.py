@@ -29,7 +29,9 @@ SECRET_KEY = 'django-insecure-0%!_4^ve5+n&phapkt(1&#_g1mfa9o-2(b@t#fwpcf1lu!0y$m
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS: list[str] = ['bar-sybr.onrender.com']  # type: ignore
+ALLOWED_HOSTS: list[str] = ['bar-sybr.onrender.com',
+                            'www.bar-system.gelinski.dev',
+                            'bar-system.gelinski.dev']  # type: ignore
 
 
 # Application definition
