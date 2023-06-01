@@ -2,7 +2,8 @@ from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 from django.views.generic.list import ListView
-
+# from bar.config import CLOUD_URL
+import os
 from . import models
 
 
@@ -44,10 +45,10 @@ class AdicionarAoCarrinho(View):
         categoria_id = produto.categoria.id
         estoque = produto.estoque
 
-        if imagem:
-            imagem = imagem.name
+        url = os.getenv('CLOUD_URL')
 
-        print(imagem)
+        if imagem:
+            imagem = f'{url}{imagem.name}'
 
         if produto.estoque or produto.estoque == 0:
             if produto.estoque < 1:

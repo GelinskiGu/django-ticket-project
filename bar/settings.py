@@ -99,6 +99,7 @@ DATABASES = {
     }
 }
 """
+
 DATABASES = {
     'default': dj_database_url.parse(os.getenv('DATABASE_URL'))
 }
@@ -178,7 +179,6 @@ MESSAGE_TAGS = {
 # SESSION_ENGINE = "django.contrib.sessions.backends.file"
 # SESSION_FILE_PATH = '/home/luizotavio/Desktop/temp'
 """
-
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': CLOUD_NAME,
     'API_KEY': API_KEY,
@@ -190,4 +190,5 @@ CLOUDINARY_STORAGE = {
     'API_KEY': os.getenv('API_KEY'),
     'API_SECRET': os.getenv('API_SECRET')
 }
+
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
