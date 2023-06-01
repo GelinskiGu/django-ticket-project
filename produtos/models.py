@@ -17,7 +17,7 @@ class Categoria(models.Model):
 class Produto(models.Model):
     nome = models.CharField(max_length=255)
     imagem = models.ImageField(
-        upload_to='produto_imagens/%Y/%m/', blank=True, null=True)
+        upload_to='bar-system/produto_imagens/%Y/%m/', blank=True, null=True)
     preco = models.FloatField(verbose_name='Preço')
     categoria = models.ForeignKey(Categoria, on_delete=models.DO_NOTHING)
     estoque = models.PositiveIntegerField(blank=True, null=True)
@@ -26,7 +26,8 @@ class Produto(models.Model):
     def get_preco_formatado(self):
         return utils.formata_preco(self.preco)
     get_preco_formatado.short_description = 'Preço'
-
+    
+    """
     @staticmethod
     def resize_image(img, new_width=96):
         img_full_path = os.path.join(settings.MEDIA_ROOT, img.name)
@@ -52,6 +53,7 @@ class Produto(models.Model):
 
         if self.imagem:
             self.resize_image(self.imagem, max_image_size)
+    """
 
     def __str__(self):
         return self.nome

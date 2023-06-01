@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import dj_database_url
+# from .config import POSTGRES_URL, CLOUD_NAME, API_KEY, API_SECRET
 import os
 
 from django.contrib.messages import constants
@@ -31,7 +32,8 @@ DEBUG = True
 
 ALLOWED_HOSTS: list[str] = ['bar-sybr.onrender.com',
                             'www.bar-system.gelinski.dev',
-                            'bar-system.gelinski.dev']  # type: ignore
+                            'bar-system.gelinski.dev',
+                            '127.0.0.1']  # type: ignore
 
 
 # Application definition
@@ -47,8 +49,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 MIDDLEWARE = [
@@ -100,6 +102,11 @@ DATABASES = {
 DATABASES = {
     'default': dj_database_url.parse(os.getenv('DATABASE_URL'))
 }
+"""
+DATABASES = {
+    'default': dj_database_url.parse(POSTGRES_URL)
+}
+"""
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -170,3 +177,17 @@ MESSAGE_TAGS = {
 # Para sessions em arquivos ao invés da base de dados
 # SESSION_ENGINE = "django.contrib.sessions.backends.file"
 # SESSION_FILE_PATH = '/home/luizotavio/Desktop/temp'
+"""
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': CLOUD_NAME,
+    'API_KEY': API_KEY,
+    'API_SECRET': API_SECRET
+}
+"""
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.getenv('CLOUD_NAME'),
+    'API_KEY': os.getenv('API_KEY'),
+    'API_SECRET': os.getenv('API_SECRET')
+}
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
