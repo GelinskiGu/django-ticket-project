@@ -130,3 +130,7 @@ dmypy.json
 config.py
 .vscode
 node_modules
+
+.dockerignore
+Dockerfile
+docker-compose.yml
